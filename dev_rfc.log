@@ -1,0 +1,20 @@
+
+**** Log file opened at 2024-11-01 11:54:47.965874 UTC+07:00 (SE Asia Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 01:04:49
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : C:\Develop\Project\fsapi
+Program                   : python
+Process ID                : 21240
+User                      : Bunjong
+Hardware                  : PC with Windows NT 24x AMD64 Level 6 (Mod 183 Step 1)
+Operating_system          : Windows NT 10.0
+Hostname                  : BUNJONG-PC
+IP address                : 192.168.3.79
+IPv6 address              : fe80::2137:27a9:7595:d4d1
+Global trace level        : 0
+
+2024-11-01 11:54:47.962357 [17328] >> Info entry
+	Did not find config file C:\Develop\Project\fsapi\sapnwrfc.ini.

@@ -3,6 +3,8 @@ venv/
 env/
 .venv/
 .env/
+.env
+
 
 # Ignore log files
 logs/
@@ -14,3 +16,5 @@ __pycache__/
 
 # Ignore configuration files if they contain sensitive information
 config/config.json
+
+test.py
