@@ -13,38 +13,42 @@ def connect_to_sap():
         codepage=Config.SAP_CODEPAGE
     )
 
-def call_bapi(bapi_name, params):
-    # เรียก BAPI ด้วยการเชื่อมต่อและส่งพารามิเตอร์ที่กำหนด
-    conn = connect_to_sap()
+def call_bapi(bapi_name: str, params: dict):
+    """
+    เรียก SAP BAPI และส่งพารามิเตอร์
+    """
+    conn = None
     try:
-        # ส่งคำขอไปยัง BAPI และรับผลลัพธ์
-        result = conn.call(bapi_name, **params)
+        conn = connect_to_sap()
+        result = conn.call(bapi_name, **params)  # เรียก BAPI ด้วยชื่อและพารามิเตอร์
         return {"status": "success", "data": result}
     except Exception as e:
-        # จัดการข้อผิดพลาดและส่งข้อความแจ้งเตือน
         return {"status": "error", "message": str(e)}
+    finally:
+        if conn:
+            conn.close()
+
     
 def call_rfc_read_table(table, fields, where_conditions):
     conn = connect_to_sap()
     try:
-        # เรียกใช้ BAPI RFC_READ_TABLE
         result = conn.call('RFC_READ_TABLE', 
                            QUERY_TABLE=table,
                            DELIMITER="|",
                            FIELDS=[{"FIELDNAME": field} for field in fields],
                            OPTIONS=[{"TEXT": where_conditions}])
-        
-        # ตรวจสอบว่ามีข้อมูลใน result["DATA"] หรือไม่
-        record_found = bool(result["DATA"])
 
-        # แปลงข้อมูลใน DATA ให้แยกเป็น JSON ตามฟิลด์ถ้ามีข้อมูล
+        # ตรวจสอบว่ามีข้อมูลใน result["DATA"] หรือไม่
+        record_found = bool(result.get("DATA"))
+
+        # ถ้าไม่มีข้อมูลให้กำหนด DATA เป็นค่าว่าง
         parsed_data = parse_wa_data(result["DATA"], result["FIELDS"]) if record_found else []
 
         return {
             "status": "success",
             "record_found": record_found,  # true ถ้ามีข้อมูล, false ถ้าไม่มีข้อมูล
             "data": {
-                "DATA": parsed_data,
+                "DATA": parsed_data,           # ส่ง DATA ที่แปลงแล้วกลับไป
                 "FIELDS": result["FIELDS"],
                 "OPTIONS": result["OPTIONS"]
             }
