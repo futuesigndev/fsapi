@@ -72,3 +72,4 @@ def parse_wa_data(data, fields):
         parsed_entry = {fields[i]["FIELDNAME"]: wa_values[i] for i in range(len(fields))}
         parsed_data.append(parsed_entry)
     return parsed_data
+
