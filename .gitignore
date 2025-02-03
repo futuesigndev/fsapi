@@ -9,6 +9,7 @@ env/
 # Ignore log files
 logs/
 scripts/*.log
+*.bak
 
 # Ignore Python cache files
 __pycache__/

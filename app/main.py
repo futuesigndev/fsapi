@@ -4,7 +4,7 @@ from app.dependencies import create_access_token, verify_credentials
 from app.api.routes import router  # นำเข้า router จาก routes.py
 import logging
 
-app = FastAPI()
+app = FastAPI()  
 
 logging.basicConfig(
     level=logging.DEBUG,  # แสดง Log ตั้งแต่ระดับ DEBUG ขึ้นไป

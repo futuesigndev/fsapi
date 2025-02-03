@@ -1,0 +1,16 @@
+# บังคับให้ไฟล์โค้ดใช้ LF (เพื่อรองรับ Linux & macOS)
+*.py text eol=lf
+*.js text eol=lf
+*.sh text eol=lf
+
+# บังคับให้ไฟล์ Windows-specific ใช้ CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Log file ต้องใช้ LF เสมอ
+*.log text eol=lf
+
+# ไฟล์ไบนารี ไม่ให้ Git เปลี่ยนแปลงอะไรเลย
+*.png binary
+*.jpg binary
+*.zip binary
