@@ -23,3 +23,5 @@ metadata/*
 
 test.py
 app/metadata
+
+deploy-to-prd.sh
