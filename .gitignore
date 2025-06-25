@@ -22,3 +22,4 @@ metadata/
 metadata/*
 
 test.py
+app/metadata
