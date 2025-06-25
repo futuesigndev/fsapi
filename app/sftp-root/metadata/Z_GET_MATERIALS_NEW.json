@@ -1,0 +1,39 @@
+{
+    "function_name": "Z_GET_MATERIALS_NEW",
+    "description": "DATA MATERIALS MASTER",
+    "input_parameters": {
+        "I_DATE": {"type": "DATS", "length": 8, "required": true}
+    },
+    "output_parameters":{
+        "RETURN": {
+            "TYPE": {"type": "CHAR", "length": 1, "required": true},
+            "ID": {"type": "CHAR", "length": 20, "required": true},
+            "NUMBER": {"type": "NUMC", "length": 3, "required": true},
+            "MESSAGE": {"type": "CHAR", "length": 220, "required": true}
+        },
+        "T_MATERIALS": {
+            "MATNR": {"type": "CHAR", "length": 18, "required": true},
+            "ERSDA": {"type": "DATS", "length": 8, "required": true},
+            "LAEDA": {"type": "DATS", "length": 8, "required": true},
+            "MTART": {"type": "CHAR", "length": 4, "required": true},
+            "MAKTX": {"type": "CHAR", "length": 40, "required": true},
+            "NTGEW": {"type": "QUAN", "length": 13, "required": true},
+            "GEWEI": {"type": "UNIT", "length": 3, "required": true},
+            "BRGEW": {"type": "QUAN", "length": 13, "required": true},
+            "MEINS": {"type": "UNIT", "length": 3, "required": true},
+	        "MVGR1": {"type": "CHAR", "length": 3, "required": true},
+	        "MVGR2": {"type": "CHAR", "length": 3, "required": true},
+	        "MVGR3": {"type": "CHAR", "length": 3, "required": true},
+	        "MVGR4": {"type": "CHAR", "length": 3, "required": true},
+	        "MVGR5": {"type": "CHAR", "length": 3, "required": true},
+            "BEZEI1": {"type": "CHAR", "length": 25, "required": true},
+            "BEZEI2": {"type": "CHAR", "length": 25, "required": true},
+            "BEZEI3": {"type": "CHAR", "length": 25, "required": true},
+            "BEZEI4": {"type": "CHAR", "length": 25, "required": true},
+            "BEZEI5": {"type": "CHAR", "length": 25, "required": true},
+            "KBETR": {"type": "DEC", "length": 15, "required": true}
+
+        }
+    }
+}
+

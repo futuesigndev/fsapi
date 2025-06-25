@@ -1,0 +1,122 @@
+{
+    "function_name": "ZSD_SALE_ORDER",
+    "description": "Sale order",
+    "input_parameters": {
+        "SALE_ORDER_NO": {"type": "CHAR", "length": 10, "required": false},
+        "MODE": {"type": "CHAR", "length": 1, "required": true},
+        "TESTRUN": {"type": "CHAR", "length": 1, "required": false},
+        "DOC_HEADER": {
+            "DOC_TYPE": {"type": "CHAR", "length": 4, "required": true},
+            "SALES_ORG": {"type": "CHAR", "length": 4, "required": true},
+            "DISTR_CHAN": {"type": "CHAR", "length": 2, "required": true},
+            "DIVISION": {"type": "CHAR", "length": 2, "required": true},
+            "SALES_GRP": {"type": "CHAR", "length": 3, "required": false},
+            "SALES_OFF": {"type": "CHAR", "length": 4, "required": false},
+            "REQ_DATE_H": {"type": "DATS", "length": 8, "required": true},
+            "PURCH_DATE": {"type": "DATS", "length": 8, "required": false},
+            "REF_1": {"type": "CHAR", "length": 12, "required": false},
+            "NAME": {"type": "CHAR", "length": 35, "required": false},
+            "TELEPHONE": {"type": "CHAR", "length": 16, "required": false},
+            "CUST_GROUP": {"type": "CHAR", "length": 2, "required": false},
+            "SALES_DIST": {"type": "CHAR", "length": 6, "required": false},
+            "INCOTERMS1": {"type": "CHAR", "length": 3, "required": false},
+            "INCOTERMS2": {"type": "CHAR", "length": 28, "required": false},
+            "PMNTTRMS": {"type": "CHAR", "length": 4, "required": false},
+            "ORD_REASON": {"type": "CHAR", "length": 3, "required": false},
+            "PURCH_NO_C": {"type": "CHAR", "length": 35, "required": false},
+            "PURCH_NO_S": {"type": "CHAR", "length": 35, "required": false},
+            "PO_DAT_S": {"type": "DATS", "length": 8, "required": false},
+            "REF_1_S": {"type": "CHAR", "length": 12, "required": false},
+            "SHIP_COND": {"type": "CHAR", "length": 2, "required": false},
+            "REF_DOC_L": {"type": "CHAR", "length": 16, "required": false},
+            "BILL_DATE": {"type": "DATS", "length": 8, "required": false},
+            "ASS_NUMBER": {"type": "CHAR", "length": 18, "required": false},
+            "VERSION": {"type": "CHAR", "length": 12, "required": false},
+            "SOLD_TO": {"type": "CHAR", "length": 10, "required": true},
+            "SHIP_TO": {"type": "CHAR", "length": 10, "required": false},
+            "BILL_TO": {"type": "CHAR", "length": 10, "required": false},
+            "PAYER": {"type": "CHAR", "length": 10, "required": false},
+            "PO_METH_S": {"type": "CHAR", "length": 4, "required": false},
+            "CSTCNDGRP1": {"type": "CHAR", "length": 2, "required": false},
+            "CSTCNDGRP2": {"type": "CHAR", "length": 2, "required": false},
+            "CSTCNDGRP3": {"type": "CHAR", "length": 2, "required": false},
+            "CSTCNDGRP4": {"type": "CHAR", "length": 2, "required": false},
+            "CSTCNDGRP5": {"type": "CHAR", "length": 2, "required": false}
+        }
+    },
+    "table_parameters": {
+        "DOC_ITEM": {
+            "fields": {
+                "ITM_NUMBER": {"type": "NUMC", "length": 6, "required": true},
+                "UPDATEFLAG": {"type": "CHAR", "length": 1, "required": false},
+                "PO_ITM_NO": {"type": "CHAR", "length": 6, "required": false},
+                "MATERIAL": {"type": "CHAR", "length": 18, "required": true},
+                "REASON_REJ": {"type": "CHAR", "length": 2, "required": false},
+                "PLANT": {"type": "CHAR", "length": 4, "required": true},
+                "STORE_LOC": {"type": "CHAR", "length": 4, "required": false},
+                "TARGET_QU": {"type": "CHAR", "length": 3, "required": true},
+                "SHORT_TEXT": {"type": "CHAR", "length": 40, "required": false},
+                "ITEM_CATEG": {"type": "CHAR", "length": 4, "required": false}
+            }
+        },
+        "DOC_ITEM_PRICE": {
+            "fields": {
+                "ITM_NUMBER": {"type": "NUMC", "length": 6, "required": true},
+                "COND_COUNT": {"type": "NUMC", "length": 2, "required": true},
+                "COND_TYPE": {"type": "CHAR", "length": 4, "required": true},
+                "COND_VALUE": {"type": "DEC", "length": 15, "required": true},
+                "CURRENCY": {"type": "CHAR", "length": 5, "required": true},
+                "COND_UNIT": {"type": "CHAR", "length": 3, "required": true},
+                "COND_P_UNT": {"type": "DEC", "length": 3, "required": true},
+                "UPDATEFLAG": {"type": "CHAR", "length": 1, "required": false}
+            }
+        },
+        "DOC_ITEM_SCHED": {
+            "fields": {
+                "ITM_NUMBER": {"type": "NUMC", "length": 6, "required": true},
+                "UPDATEFLAG": {"type": "CHAR", "length": 1, "required": false},
+                "SCHED_LINE": {"type": "NUMC", "length": 4, "required": false},
+                "REQ_DATE": {"type": "DATS", "length": 8, "required": true},
+                "REQ_QTY": {"type": "DEC", "length": 7, "required": true}
+            }
+        },
+        "DOC_ITEM_TEXT": {
+            "fields": {
+                "DOC_NUMBER": {"type": "CHAR", "length": 10, "required": false},
+                "ITM_NUMBER": {"type": "NUMC", "length": 6, "required": false},
+                "TEXT_ID": {"type": "CHAR", "length": 4, "required": false},
+                "LANGU": {"type": "CHAR", "length": 1, "required": false},
+                "TEXT_LINE": {"type": "CHAR", "length": 132, "required": false}
+            }
+        },
+        "DOC_PRICE": {
+            "fields": {
+                "COND_COUNT": {"type": "NUMC", "length": 2, "required": false},
+                "COND_TYPE": {"type": "CHAR", "length": 4, "required": false},
+                "COND_VALUE": {"type": "DEC", "length": 15, "required": false},
+                "CURRENCY": {"type": "CHAR", "length": 5, "required": false},
+                "COND_UNIT": {"type": "CHAR", "length": 3, "required": false},
+                "COND_P_UNT": {"type": "DEC", "length": 3, "required": false},
+                "UPDATEFLAG": {"type": "CHAR", "length": 1, "required": false}
+            }
+        },
+        "DOC_TEXT": {
+            "fields": {
+                "DOC_NUMBER": {"type": "CHAR", "length": 10, "required": false},
+                "ITM_NUMBER": {"type": "NUMC", "length": 6, "required": false},
+                "TEXT_ID": {"type": "CHAR", "length": 4, "required": false},
+                "LANGU": {"type": "CHAR", "length": 1, "required": false},
+                "TEXT_LINE": {"type": "CHAR", "length": 132, "required": false}
+            }
+        }
+    },
+    "output_parameters": {
+        "SALE_ORDER_NO_EX": {"type": "CHAR", "length": 10, "required": true},
+        "RETURN": {
+            "TYPE": {"type": "CHAR", "length": 1, "required": true},
+            "ID": {"type": "CHAR", "length": 20, "required": true},
+            "NUMBER": {"type": "NUMC", "length": 3, "required": true},
+            "MESSAGE": {"type": "CHAR", "length": 220, "required": true}
+        }
+    }
+}

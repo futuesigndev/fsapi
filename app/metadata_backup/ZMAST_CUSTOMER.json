@@ -1,0 +1,82 @@
+{
+    "function_name": "ZMAST_CUSTOMER",
+    "description": "Customer master maintain",
+    "input_parameters": {
+        "CUST_NO": {"type": "CHAR", "length": 10, "required": false},
+        "MODE": {"type": "CHAR", "length": 1, "required": true},
+        "TESTRUN": {"type": "CHAR", "length": 1, "required": false},
+        "GENERAL_DATA": {
+            "NAME1": {"type": "CHAR", "length": 35, "required": false},
+            "NAME2": {"type": "CHAR", "length": 35, "required": false},
+            "NAME3": {"type": "CHAR", "length": 35, "required": false},
+            "NAME4": {"type": "CHAR", "length": 35, "required": false},
+            "CITY": {"type": "CHAR", "length": 40, "required": false},
+            "DISTRICT": {"type": "CHAR", "length": 40, "required": false},
+            "SEARCH1": {"type": "CHAR", "length": 20, "required": false},
+		    "SEARCH2": {"type": "CHAR", "length": 20, "required": false},
+            "ACC_GROUP": {"type": "CHAR", "length": 4, "required": false},
+            "TAX1": {"type": "CHAR", "length": 16, "required": false},
+            "TAX3": {"type": "CHAR", "length": 16, "required": false},
+            "VAT_REG": {"type": "CHAR", "length": 20, "required": false},
+            "TYPE_BUS": {"type": "CHAR", "length": 30, "required": false},
+            "POST_CODE": {"type": "CHAR", "length": 10, "required": false},
+            "STREET_NO": {"type": "CHAR", "length": 65, "required": false},
+            "LOCATION": {"type": "CHAR", "length": 40, "required": false},
+            "COUNTRY": {"type": "CHAR", "length": 3, "required": false},
+            "TEL1_NUMBR": {"type": "CHAR", "length": 30, "required": false},
+            "TEL1_EXT": {"type": "CHAR", "length": 10, "required": false},
+            "FAX_NUMBER": {"type": "CHAR", "length": 30, "required": false},
+            "FAX_EXTENS": {"type": "CHAR", "length": 10, "required": false},
+            "TRANSPZONE": {"type": "CHAR", "length": 10, "required": false},
+            "CONTACT": {"type": "CHAR", "length": 35, "required": false},
+            "CRM_REF": {"type": "CHAR", "length": 50, "required": false},
+            "EXP_STATION": {"type": "CHAR", "length": 25, "required": false},
+            "LANGU": {"type": "CHAR", "length": 2, "required": false},
+            "STR_SUPPL3": {"type": "CHAR", "length": 40, "required": false}
+        }
+    },
+    "table_parameters": {
+        "COMPANY_DATA": {
+            "fields": {
+                "COMPANY": {"type": "CHAR", "length": 10, "required": true},
+                "SORT_KEY": {"type": "CHAR", "length": 4, "required": false},
+                "RECON_ACC": {"type": "CHAR", "length": 3, "required": false},
+                "TERM": {"type": "CHAR", "length": 10, "required": false},
+                "DUNN_PROC": {"type": "CHAR", "length": 4, "required": false},
+                "DUNN_CERK": {"type": "CHAR", "length": 4, "required": false},
+                "XZVER": {"type": "CHAR", "length": 1, "required": false}
+            }
+        },
+        "SALE_DATA": {
+            "fields": {
+                "SALE_OROG": {"type": "CHAR", "length": 4, "required": false},
+                "DIST_CHN": {"type": "CHAR", "length": 2, "required": true},
+                "DIVISION": {"type": "CHAR", "length": 2, "required": true},
+                "CUST_GROUP": {"type": "CHAR", "length": 2, "required": false},
+                "SALE_DIST": {"type": "CHAR", "length": 6, "required": false},
+                "INCO1": {"type": "CHAR", "length": 3, "required": false},
+                "INCO2": {"type": "CHAR", "length": 3, "required": false},
+                "MAX_PARIAL": {"type": "DEC", "length": 1, "required": false},
+                "DEL_PIOR": {"type": "NUMC", "length": 2, "required": false},
+                "SHIP_COND": {"type": "CHAR", "length": 2, "required": false},
+                "CURRENCY": {"type": "CUKY", "length": 5, "required": false},
+                "ACC_ASS_GROUP": {"type": "CHAR", "length": 2, "required": false},
+                "TERM": {"type": "CHAR", "length": 4, "required": false},
+                "SALE_GRP": {"type": "CHAR", "length": 3, "required": false},
+                "SALE_OFF": {"type": "CHAR", "length": 4, "required": false},
+                "CUST_GROUP1": {"type": "CHAR", "length": 3, "required": false},
+                "POD_FLAG": {"type": "CHAR", "length": 1, "required": false},
+                "CUST_STS_GROUP": {"type": "CHAR", "length": 1, "required": false}
+            }
+        }
+    },
+    "output_parameters": {
+        "CUST_NO_EX": {"type": "CHAR", "length": 10, "required": true},
+        "RETURN": {
+            "TYPE": {"type": "CHAR", "length": 1, "required": true},
+            "ID": {"type": "CHAR", "length": 20, "required": true},
+            "NUMBER": {"type": "NUMC", "length": 3, "required": true},
+            "MESSAGE": {"type": "CHAR", "length": 220, "required": true}
+        }
+    }
+}

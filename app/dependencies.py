@@ -4,7 +4,8 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from dotenv import load_dotenv
-from app.services.oracle_service import get_user_credentials
+#from app.services.oracle_service import get_user_credentials
+from app.services.postgres_service import get_user_credentials
 
 # โหลดค่าใน .env
 load_dotenv()
@@ -12,7 +13,7 @@ load_dotenv()
 # กำหนดค่าที่ใช้ใน OAuth2
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 180
+ACCESS_TOKEN_EXPIRE_MINUTES = 120
 
 # ตรวจสอบว่า SECRET_KEY ถูกตั้งค่า
 if not SECRET_KEY:

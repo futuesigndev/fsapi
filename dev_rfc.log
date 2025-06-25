@@ -71,3 +71,400 @@ Global trace level        : 0
 2025-01-09 10:47:55.921526 [15592] >> Error entry
 	[Handle: 1984114581968	ConvID: 98155843	Target: SAPDEV	SysID: DEV	SysNr: 00	User: CITOF	Client: 400	Language: E	Codepage: 4103]
 	RfcSystemException: Key: DYNPRO_SEND_IN_BACKGROUND, Code: RFC_ABAP_RUNTIME_FAILURE, Message: Screen output without connection to user.
+
+**** Log file opened at 2025-04-02 17:07:51.238458 UTC+07:00 (SE Asia Standard Time), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 01:04:49
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : C:\Develop\Project\fsapi
+Program                   : python
+Process ID                : 21760
+User                      : Bunjong
+Hardware                  : PC with Windows NT 24x AMD64 Level 6 (Mod 183 Step 1)
+Operating_system          : Windows NT 10.0
+Hostname                  : BUNJONG-PC
+IP address                : 192.168.3.79
+IPv6 address              : fe80::2137:27a9:7595:d4d1
+Global trace level        : 0
+
+2025-04-02 17:07:51.237761 [21900] >> Error entry
+	[Handle: 2093198962896	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Wed Apr 02 17:07:51 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     2
+
+2025-04-03 00:00:23.231289 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Thu Apr 03 00:00:23 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     4
+
+2025-04-03 08:41:04.141136 [21900] >> Error entry
+	[Handle: 2093198956640	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Thu Apr 03 08:41:04 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     6
+
+2025-04-03 08:42:10.421044 [21900] >> Error entry
+	[Handle: 2093198956640	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Thu Apr 03 08:42:10 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     8
+
+2025-04-03 15:03:44.039735 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Thu Apr 03 15:03:44 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     10
+
+2025-04-03 15:04:39.041821 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Thu Apr 03 15:04:39 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     12
+
+2025-04-03 15:05:38.420739 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Thu Apr 03 15:05:38 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     14
+
+2025-04-04 00:00:23.354945 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Fri Apr 04 00:00:23 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     16
+
+2025-04-04 08:13:44.075408 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Fri Apr 04 08:13:44 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     18
+
+2025-04-04 08:14:59.394316 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Fri Apr 04 08:14:59 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     20
+
+2025-04-04 08:19:21.965084 [21900] >> Error entry
+	[Handle: 2093198973424	ConvID: 	Target: 	SysID: 	SysNr: 	User: 	Codepage: 4103]
+	RfcCommunicationException: Return Value: 20, Code: RFC_COMMUNICATION_FAILURE, Message: 
+LOCATION    CPIC (TCP/IP) on local host with Unicode
+ERROR       partner '192.168.1.12:3300' not reached
+TIME        Fri Apr 04 08:19:21 2025
+RELEASE     753
+COMPONENT   NI (network interface)
+VERSION     40
+RC          -10
+MODULE      D:/depot/bas/753_REL/src/base/ni/nixxi.cpp
+LINE        3454
+DETAIL      NiPConnect2: 192.168.1.12:3300
+SYSTEM CALL connect
+ERRNO       10060
+ERRNO TEXT  WSAETIMEDOUT: Connection timed out
+COUNTER     22
+
+
+**** Log file opened at 2025-05-14 04:20:17.604705 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 00:21:14
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : /opt/projects/backend/fsapi
+Program                   : python3
+Process ID                : 384168
+User                      : administrator
+Hardware                  : AMD/Intel x86_64 with Linux x86_64
+Operating_system          : Linux 5.15.0-136-generic
+Hostname                  : wpfs
+IP address                : 127.0.1.1
+IPv6 address              : fe80::215:5dff:fe02:2a06
+Global trace level        : 0
+
+2025-05-14 04:20:17.604555 [139816467264128] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 227
+2025-05-14 04:20:17.610063 [139816467264128] >> Error entry
+	[Handle: 94154390485712	ConvID: 99862546	Target: SAPPRD	SysID: PRD	SysNr: 00	User: citof	Client: 900	Language: E	Codepage: 4103]
+	RfcABAPMessageException: Key: , Code: RFC_ABAP_MESSAGE, Message: Name or password is incorrect (repeat logon)
+
+**** Log file opened at 2025-05-14 06:34:07.164993 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 00:21:14
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : /opt/projects/backend/fsapi
+Program                   : python3
+Process ID                : 384165
+User                      : administrator
+Hardware                  : AMD/Intel x86_64 with Linux x86_64
+Operating_system          : Linux 5.15.0-136-generic
+Hostname                  : wpfs
+IP address                : 127.0.1.1
+IPv6 address              : fe80::215:5dff:fe02:2a06
+Global trace level        : 0
+
+2025-05-14 06:34:07.164893 [140446069953152] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 227
+2025-05-14 06:34:07.165400 [140446069953152] >> Error entry
+	[Handle: 94041622863920	ConvID: 08123104	Target: SAPPRD	SysID: PRD	SysNr: 00	User: citof	Client: 900	Language: E	Codepage: 4103]
+	RfcABAPMessageException: Key: , Code: RFC_ABAP_MESSAGE, Message: Name or password is incorrect (repeat logon)
+
+**** Log file opened at 2025-05-14 06:41:42.109673 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 00:21:14
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : /opt/projects/backend/fsapi
+Program                   : python3
+Process ID                : 384167
+User                      : administrator
+Hardware                  : AMD/Intel x86_64 with Linux x86_64
+Operating_system          : Linux 5.15.0-136-generic
+Hostname                  : wpfs
+IP address                : 127.0.1.1
+IPv6 address              : fe80::215:5dff:fe02:2a06
+Global trace level        : 0
+
+2025-05-14 06:41:42.109578 [139829488886400] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 227
+2025-05-14 06:41:42.110362 [139829488886400] >> Error entry
+	[Handle: 94035419064656	ConvID: 08598062	Target: SAPPRD	SysID: PRD	SysNr: 00	User: citof	Client: 900	Language: E	Codepage: 4103]
+	RfcABAPMessageException: Key: , Code: RFC_ABAP_MESSAGE, Message: Name or password is incorrect (repeat logon)
+2025-05-14 06:47:50.187105 [139816467264128] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 227
+2025-05-14 06:47:50.187362 [139816467264128] >> Error entry
+	[Handle: 94154390493616	ConvID: 09209159	Target: SAPPRD	SysID: PRD	SysNr: 00	User: citof	Client: 900	Language: E	Codepage: 4103]
+	RfcABAPMessageException: Key: , Code: RFC_ABAP_MESSAGE, Message: Name or password is incorrect (repeat logon)
+
+**** Log file opened at 2025-05-14 06:48:26.347039 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 00:21:14
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : /opt/projects/backend/fsapi
+Program                   : python3
+Process ID                : 384166
+User                      : administrator
+Hardware                  : AMD/Intel x86_64 with Linux x86_64
+Operating_system          : Linux 5.15.0-136-generic
+Hostname                  : wpfs
+IP address                : 127.0.1.1
+IPv6 address              : fe80::215:5dff:fe02:2a06
+Global trace level        : 0
+
+2025-05-14 06:48:26.346938 [139842510381696] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 227
+2025-05-14 06:48:26.347492 [139842510381696] >> Error entry
+	[Handle: 94787456543232	ConvID: 09268300	Target: SAPPRD	SysID: PRD	SysNr: 00	User: citof	Client: 900	Language: E	Codepage: 4103]
+	RfcABAPMessageException: Key: , Code: RFC_ABAP_MESSAGE, Message: Name or password is incorrect (repeat logon)
+
+**** Log file opened at 2025-05-21 06:28:08.795067 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 00:21:14
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : /opt/projects/backend/fsapi
+Program                   : python3
+Process ID                : 386443
+User                      : administrator
+Hardware                  : AMD/Intel x86_64 with Linux x86_64
+Operating_system          : Linux 5.15.0-136-generic
+Hostname                  : wpfs
+IP address                : 127.0.1.1
+IPv6 address              : fe80::215:5dff:fe02:2a06
+Global trace level        : 0
+
+2025-05-21 06:28:08.794947 [140185891603072] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 466
+2025-05-21 06:28:08.795361 [140185891603072] >> Error entry
+	[Handle: 94535518399328	ConvID: 13270960	Target: SAPPRD	SysID: PRD	SysNr: 00	User: CITOF	Client: 900	Language: E	Codepage: 4103]
+	RfcSystemException: Key: SYNTAX_ERROR, Code: RFC_ABAP_RUNTIME_FAILURE, Message: Syntax error in program SAPLZRFC                                .
+
+**** Log file opened at 2025-05-21 06:28:36.189608 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 00:21:14
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : /opt/projects/backend/fsapi
+Program                   : python3
+Process ID                : 386441
+User                      : administrator
+Hardware                  : AMD/Intel x86_64 with Linux x86_64
+Operating_system          : Linux 5.15.0-136-generic
+Hostname                  : wpfs
+IP address                : 127.0.1.1
+IPv6 address              : fe80::215:5dff:fe02:2a06
+Global trace level        : 0
+
+2025-05-21 06:28:36.189490 [140625338483328] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 466
+2025-05-21 06:28:36.189901 [140625338483328] >> Error entry
+	[Handle: 94109264844800	ConvID: 13304461	Target: SAPPRD	SysID: PRD	SysNr: 00	User: CITOF	Client: 900	Language: E	Codepage: 4103]
+	RfcSystemException: Key: SYNTAX_ERROR, Code: RFC_ABAP_RUNTIME_FAILURE, Message: Syntax error in program SAPLZRFC                                .
+2025-05-21 06:42:48.784512 [140625338483328] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 466
+2025-05-21 06:42:48.785822 [140625338483328] >> Error entry
+	[Handle: 94109264733568	ConvID: 14268564	Target: SAPPRD	SysID: PRD	SysNr: 00	User: CITOF	Client: 900	Language: E	Codepage: 4103]
+	RfcSystemException: Key: SYNTAX_ERROR, Code: RFC_ABAP_RUNTIME_FAILURE, Message: Syntax error in program SAPLZRFC                                .
+2025-05-21 06:43:16.359594 [140625338483328] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 468
+2025-05-21 06:43:16.359849 [140625338483328] >> Error entry
+	[Handle: 94109264858736	ConvID: 14298502	Target: SAPPRD	SysID: PRD	SysNr: 00	User: CITOF	Client: 900	Language: E	Codepage: 4103]
+	RfcSystemException: Key: SYNTAX_ERROR, Code: RFC_ABAP_RUNTIME_FAILURE, Message: Syntax error in program SAPLZRFC                                .
+
+**** Log file opened at 2025-05-21 06:45:08.437672 UTC+00:00 (GMT), Encoding UTF-8
+NW RFC Library: SDK variant, Release 750 Patch Level 11
+Compilation date          : Jan 14 2023 00:21:14
+CPIC library              : 753.2022.12.23 version 3
+NI library                : 40
+Kernel Release            : 753 Patch Level 1115
+Current working directory : /opt/projects/backend/fsapi
+Program                   : python3
+Process ID                : 386444
+User                      : administrator
+Hardware                  : AMD/Intel x86_64 with Linux x86_64
+Operating_system          : Linux 5.15.0-136-generic
+Hostname                  : wpfs
+IP address                : 127.0.1.1
+IPv6 address              : fe80::215:5dff:fe02:2a06
+Global trace level        : 0
+
+2025-05-21 06:45:08.437545 [140602895045248] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 468
+2025-05-21 06:45:08.437965 [140602895045248] >> Error entry
+	[Handle: 93912256882912	ConvID: 14419660	Target: SAPPRD	SysID: PRD	SysNr: 00	User: CITOF	Client: 900	Language: E	Codepage: 4103]
+	RfcSystemException: Key: SYNTAX_ERROR, Code: RFC_ABAP_RUNTIME_FAILURE, Message: Syntax error in program SAPLZRFC                                .
+2025-05-21 06:49:52.106101 [140625338483328] >> Error entry
+	Error in receive: 18, no SAP ErrInfo available, 468
+2025-05-21 06:49:52.106346 [140625338483328] >> Error entry
+	[Handle: 94109264809648	ConvID: 14716961	Target: SAPPRD	SysID: PRD	SysNr: 00	User: CITOF	Client: 900	Language: E	Codepage: 4103]
+	RfcSystemException: Key: SYNTAX_ERROR, Code: RFC_ABAP_RUNTIME_FAILURE, Message: Syntax error in program SAPLZRFC                                .

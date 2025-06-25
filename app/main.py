@@ -10,13 +10,14 @@ logging.basicConfig(
     level=logging.DEBUG,  # แสดง Log ตั้งแต่ระดับ DEBUG ขึ้นไป
     format="%(asctime)s - %(levelname)s - %(message)s",  # รูปแบบ Log
     handlers=[
-        logging.StreamHandler()  # ส่ง Log ไปยัง Console
+        logging.StreamHandler(),  # ส่ง Log ไปยัง Console
+        logging.FileHandler("app.log", encoding="utf-8")  # เก็บ Log ลงไฟล์
     ]
 )
 
 @app.post("/token")
 async def token(
-    grant_type: str = Form(...),
+    grant_type: str = Form(default=""),
     client_id: str = Form(...),
     client_secret: str = Form(...)
 ):
@@ -40,4 +41,4 @@ app.include_router(router, prefix="/api")
 # รัน Uvicorn เมื่อไฟล์นี้ถูกเรียกใช้งานโดยตรง
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8001, reload=True, workers=4, proxy_headers=True)

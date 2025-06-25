@@ -1,0 +1,47 @@
+{
+    "function_name": "ZMAST_BOM",
+    "description": "BOM master maintain",
+    "input_parameters": {
+        "MATERIAL": {"type": "CHAR", "length": 18, "required": true},
+        "PLANT": {"type": "CHAR", "length": 4, "required": true},
+        "BOM_USAGE": {"type": "CHAR", "length": 1, "required": true},
+        "ALTERNATIVE": {"type": "CHAR", "length": 2, "required": true},
+        "VALID_FROM": {"type": "CHAR", "length": 10, "required": false},
+        "MODE": {"type": "CHAR", "length": 1, "required": true},
+        "TESTRUN": {"type": "CHAR", "length": 1, "required": false},
+        "BOM_HEADER": {
+            "BASE_QUAN": {"type": "CHAR", "length": 17, "required": true},
+            "BASE_UNIT": {"type": "UNIT", "length": 3, "required": true},
+            "BOM_STATUS": {"type": "NUMC", "length": 1, "required": true},
+            "ALT_TEXT": {"type": "CHAR", "length": 40, "required": false},
+            "LABORATORY": {"type": "CHAR", "length": 3, "required": false}
+        }
+    },
+    "table_parameters": {
+        "BOM_ITEM": {
+            "fields": {
+                "ITEM_CATEG": {"type": "CHAR", "length": 1, "required": true},
+                "ITEM_NO": {"type": "CHAR", "length": 4, "required": true},
+                "COMPONENT": {"type": "CHAR", "length": 18, "required": true},
+                "COMP_QTY": {"type": "CHAR", "length": 18, "required": true},
+                "COMP_UNIT": {"type": "CHAR", "length": 3, "required": true},
+                "FIXED_QTY": {"type": "CHAR", "length": 1, "required": false},
+                "ITEM_TEXT1": {"type": "CHAR", "length": 40, "required": false},
+                "ITEM_TEXT2": {"type": "CHAR", "length": 40, "required": false},
+                "SORTSTRING": {"type": "CHAR", "length": 10, "required": false}
+            }
+        }
+    },
+    "output_parameters": {
+        "MATERIAL_EX": {"type": "CHAR", "length": 10, "required": true},
+        "PLANT_EX": {"type": "CHAR", "length": 4, "required": true},
+        "BOM_USAGE_EX": {"type": "CHAR", "length": 1, "required": true},
+        "ALTERNATIVE_EX": {"type": "CHAR", "length": 2, "required": true},
+        "RETURN": {
+            "TYPE": {"type": "CHAR", "length": 1, "required": true},
+            "ID": {"type": "CHAR", "length": 20, "required": true},
+            "NUMBER": {"type": "NUMC", "length": 3, "required": true},
+            "MESSAGE": {"type": "CHAR", "length": 220, "required": true}
+        }
+    }
+}
