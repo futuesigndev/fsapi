@@ -18,4 +18,7 @@ __pycache__/
 # Ignore configuration files if they contain sensitive information
 config/config.json
 
+metadata/
+metadata/*
+
 test.py
