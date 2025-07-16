@@ -1,8 +1,22 @@
+# app/services/sap_service.py
+# Core SAP connection and basic RFC operations
+
 from pyrfc import Connection
 from app.config import Config
+import os
+from typing import List, Dict, Any
+import logging
+
+try:
+    from pyrfc import Connection, ABAPApplicationError, CommunicationError
+except ImportError:
+    Connection, ABAPApplicationError, CommunicationError = None, Exception, Exception
+
 
 def connect_to_sap():
-    # เชื่อมต่อ SAP ด้วยข้อมูลการเชื่อมต่อจาก Config
+    """
+    เชื่อมต่อ SAP ด้วยข้อมูลการเชื่อมต่อจาก Config
+    """
     return Connection(
         ashost=Config.SAP_HOST,
         sysnr=Config.SAP_SYSNR,
@@ -12,6 +26,7 @@ def connect_to_sap():
         lang=Config.SAP_LANG,
         codepage=Config.SAP_CODEPAGE
     )
+
 
 def call_bapi(bapi_name: str, params: dict):
     """
@@ -30,6 +45,9 @@ def call_bapi(bapi_name: str, params: dict):
 
     
 def call_rfc_read_table(table, fields, where_conditions):
+    """
+    เรียก RFC_READ_TABLE สำหรับอ่านข้อมูลจาก SAP table
+    """
     conn = connect_to_sap()
     try:
         result = conn.call('RFC_READ_TABLE', 
@@ -56,16 +74,26 @@ def call_rfc_read_table(table, fields, where_conditions):
     except Exception as e:
         return {"status": "failed", "message": str(e)}
 
+
 def test_sap_connection():
+    """
+    ทดสอบการเชื่อมต่อ SAP
+    """
     try:
         conn = connect_to_sap()
         # ทดสอบการเชื่อมต่อด้วยคำสั่ง ping หรือฟังก์ชันที่ไม่มีผลกระทบกับระบบ SAP
         conn.ping()
         print("Connection to SAP was successful.")
+        return {"status": "success", "message": "Connection to SAP was successful."}
     except Exception as e:
         print(f"Failed to connect to SAP: {e}")
+        return {"status": "error", "message": f"Failed to connect to SAP: {e}"}
+
 
 def parse_wa_data(data, fields):
+    """
+    แปลงข้อมูลจาก RFC_READ_TABLE format เป็น dictionary
+    """
     parsed_data = []
     for entry in data:
         wa_values = entry["WA"].split("|")  # แยกข้อมูลตามตัวคั่น "|"

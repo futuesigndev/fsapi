@@ -1,34 +1,24 @@
-import cx_Oracle
-from app.config import Config
-
-def connect_to_oracle():
-    """
-    ฟังก์ชันสำหรับเชื่อมต่อ Oracle Database
-    """
-    connection = cx_Oracle.connect(
-        user=Config.ORACLE_USER,
-        password=Config.ORACLE_PASSWORD,
-        dsn=Config.ORACLE_DSN,
-        encoding=Config.ORACLE_CHARSET
-    )
-    return connection
+import logging
+from app.services.database_service import DatabaseService
 
 def get_user_credentials(client_id: str):
     """
     ดึง CLIENT_ID และ CLIENT_SECRET จาก Oracle
+    Migrated to use DatabaseService for better connection management
     """
-    connection = None
-    cursor = None
     try:
-        connection = connect_to_oracle()
         query = """
             SELECT CLIENT_ID, CLIENT_SECRET, ID_BABI
             FROM FSAPI_USER
             WHERE CLIENT_ID = :client_id
         """
-        cursor = connection.cursor()
-        cursor.execute(query, client_id=client_id)
-        row = cursor.fetchone()
+        
+        row = DatabaseService.execute_query(
+            query=query,
+            params={"client_id": client_id},
+            fetch_one=True,
+            fetch_all=False
+        )
 
         if row:
             return {
@@ -38,15 +28,14 @@ def get_user_credentials(client_id: str):
             }
         return None
     except Exception as e:
+        logging.error(f"Failed to fetch user credentials: {str(e)}")
         raise RuntimeError(f"Failed to fetch user credentials: {str(e)}")
-    finally:
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
 
 def get_function_names(client_id: str):
-    connection = connect_to_oracle()
+    """
+    Get authorized SAP functions for client
+    Migrated to use DatabaseService for better connection management
+    """
     try:
         query = """
         WITH BAPI_SPLIT AS (
@@ -73,15 +62,17 @@ def get_function_names(client_id: str):
         ORDER BY 
             FSAPI_BABI.BABI
         """
-        cursor = connection.cursor()
-        cursor.execute(query, client_id=client_id)
-        rows = cursor.fetchall()
+        
+        rows = DatabaseService.execute_query(
+            query=query,
+            params={"client_id": client_id},
+            fetch_all=True
+        )
+        
         result = [{"function_name": row[0], "function_detail": row[1]} for row in rows]
-        #logging.debug(f"Functions fetched for {client_id}: {result}")
+        logging.debug(f"Functions fetched for {client_id}: {result}")
         return result
     except Exception as e:
-        #logging.error(f"Error fetching functions for {client_id}: {e}")
+        logging.error(f"Error fetching functions for {client_id}: {e}")
         raise RuntimeError("Failed to fetch function names.")
-    finally:
-        connection.close()
 

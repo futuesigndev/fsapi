@@ -5,11 +5,11 @@ env/
 .env/
 .env
 
-
 # Ignore log files
 logs/
 scripts/*.log
 *.bak
+*.log
 
 # Ignore Python cache files
 __pycache__/
@@ -25,3 +25,71 @@ test.py
 app/metadata
 
 deploy-to-prd.sh
+
+# ============================================
+# PRODUCTION CLEANUP RULES - DO NOT COMMIT
+# ============================================
+
+# Backup and temporary files (ตามข้อกำหนด production)
+*_backup.py
+*_old.py
+*_temp.py
+*_test.py
+*_clean.py
+*_original.py
+*_copy.py
+*_bak.py
+
+# Test files outside test folder
+test_*.py
+*_test_*.py
+
+# Temporary development files
+temp/
+tmp/
+.tmp/
+*.tmp
+
+# Editor temporary files
+.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# Development JSON test files
+test_*.json
+*_test.json
+temp_*.json
+
+# Development image files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+
+# Development documentation drafts
+*_draft.md
+*_notes.md
+temp_*.md
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# pytest
+.pytest_cache/
+.cache/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+*.whl

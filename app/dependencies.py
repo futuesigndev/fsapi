@@ -4,8 +4,8 @@ from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from dotenv import load_dotenv
-#from app.services.oracle_service import get_user_credentials
-from app.services.postgres_service import get_user_credentials
+from datetime import datetime
+from app.services.oracle_service import get_user_credentials
 
 # โหลดค่าใน .env
 load_dotenv()
@@ -41,13 +41,43 @@ def verify_token(token: str = Depends(oauth2_scheme)):
         client_id = payload.get("sub")
 
         if client_id is None:
-            raise HTTPException(status_code=401, detail="Invalid token structure")
+            raise HTTPException(
+                status_code=401, 
+                detail={
+                    "error": "INVALID_TOKEN_STRUCTURE",
+                    "message": "Invalid token structure",
+                    "timestamp": datetime.utcnow().isoformat(),
+                    "type": "authentication_error"
+                }
+            )
 
         logging.debug(f"Token is valid for client_id: {client_id}")
         return {"client_id": client_id}  # ส่ง client_id กลับไป
     except JWTError as e:
+        error_detail = str(e).lower()
         logging.error(f"JWT Error: {e}")
-        raise HTTPException(status_code=401, detail="Token has expired or is invalid")
+        
+        # Determine specific error type
+        if "expired" in error_detail:
+            error_code = "TOKEN_EXPIRED"
+            message = "Access token has expired"
+        elif "invalid" in error_detail or "decode" in error_detail:
+            error_code = "TOKEN_INVALID"
+            message = "Invalid access token"
+        else:
+            error_code = "TOKEN_ERROR"
+            message = "Token authentication failed"
+            
+        raise HTTPException(
+            status_code=401, 
+            detail={
+                "error": error_code,
+                "message": message,
+                "timestamp": datetime.utcnow().isoformat(),
+                "type": "authentication_error",
+                "action": "refresh_token_or_relogin"
+            }
+        )
 
 
 def verify_credentials(client_id: str, client_secret: str):
