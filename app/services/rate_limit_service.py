@@ -3,12 +3,10 @@ Rate Limiting Service - Request rate limiting and throttling
 Provides rate limiting functionality for API endpoints
 """
 import time
-import logging
 from typing import Dict, Optional
 from threading import Lock
 from collections import defaultdict, deque
 from fastapi import HTTPException, Request
-import hashlib
 
 
 class RateLimiter:
@@ -78,7 +76,6 @@ class RateLimiter:
                     "retry_after": max(retry_after, 1)
                 }
                 
-                logging.warning(f"Rate limit exceeded for {identifier} on {endpoint}")
                 return False, rate_info
             
             # Add current request
@@ -141,10 +138,7 @@ class RateLimiter:
             
             for key in keys_to_remove:
                 del self._buckets[key]
-            
-            if keys_to_remove:
-                logging.debug(f"Cleaned up {len(keys_to_remove)} old rate limit buckets")
-
+    
 
 class RateLimitService:
     """
@@ -255,15 +249,11 @@ def create_rate_limit_dependency(endpoint_type: str = "default", custom_limit: O
                     headers=headers
                 )
             
-            # Log successful rate limit check
-            logging.debug(f"Rate limit check passed for {identifier} on {endpoint_type}")
-            
             return rate_info
             
         except HTTPException:
             raise
         except Exception as e:
-            logging.error(f"Rate limiting error: {e}")
             # Don't block requests on rate limiting errors
             return {"allowed": True, "limit": 0, "remaining": 0}
     

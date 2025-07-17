@@ -2,7 +2,6 @@
 Dependencies V1 - Enhanced authentication and authorization for V1 APIs
 Provides both client and user authentication dependencies
 """
-import logging
 import os
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -67,12 +66,10 @@ def verify_client_token(token: str = Depends(oauth2_scheme_client)) -> TokenData
                 "type": "authentication_error"
             })
 
-        logging.debug(f"Client token verified for: {client_id}")
         return TokenData(client_id=client_id)
         
     except JWTError as e:
         error_detail = str(e).lower()
-        logging.error(f"Client JWT Error: {e}")
         
         if "expired" in error_detail:
             error_code = "CLIENT_TOKEN_EXPIRED"
@@ -121,12 +118,10 @@ def verify_user_token(token: str = Depends(oauth2_scheme_user)) -> TokenData:
                 "action": "contact_administrator"
             })
             
-        logging.debug(f"User token verified for: {employee_id}")
         return TokenData(employee_id=employee_id)
         
     except JWTError as e:
         error_detail = str(e).lower()
-        logging.error(f"User JWT Error: {e}")
         
         if "expired" in error_detail:
             error_code = "USER_TOKEN_EXPIRED"
@@ -185,7 +180,6 @@ def verify_any_token(token: str = Depends(oauth2_scheme_client)) -> TokenData:
             
     except JWTError as e:
         error_detail = str(e).lower()
-        logging.error(f"Token JWT Error: {e}")
         
         if "expired" in error_detail:
             error_code = "TOKEN_EXPIRED"
@@ -238,7 +232,6 @@ def require_function_authorization(function_name: str):
                 f"Client {current_token.client_id} is not authorized to use function {function_name}"
             )
             
-        logging.debug(f"Function authorization verified: {current_token.client_id} -> {function_name}")
         return current_token
     
     return check_authorization
@@ -263,7 +256,6 @@ def require_role(required_role: str):
                 f"Required role '{required_role}' not found. User role: '{profile['role']}'"
             )
             
-        logging.debug(f"Role authorization verified: {current_user.employee_id} -> {required_role}")
         return current_user
     
     return check_role
@@ -288,7 +280,6 @@ def require_department(required_department: str):
                 f"Required department '{required_department}' access denied. User department: '{profile['department']}'"
             )
             
-        logging.debug(f"Department authorization verified: {current_user.employee_id} -> {required_department}")
         return current_user
     
     return check_department

@@ -2,10 +2,7 @@
 Authentication Service - Client Credentials Validation
 Handles client authentication and SAP function permissions
 """
-import logging
-from typing import Dict, List, Optional
-from app.services.database_service import DatabaseService
-
+from typing import Optional, Dict, List
 
 class AuthService:
     """
@@ -44,11 +41,9 @@ class AuthService:
                     "id_babi": row[2]
                 }
             
-            logging.debug(f"Client {client_id} not found in database")
             return None
             
         except Exception as e:
-            logging.error(f"Failed to fetch client credentials for {client_id}: {e}")
             raise RuntimeError(f"Failed to fetch client credentials: {str(e)}")
 
     @staticmethod
@@ -67,18 +62,14 @@ class AuthService:
             credentials = AuthService.get_client_credentials(client_id)
             
             if not credentials:
-                logging.debug(f"Client {client_id} not found")
                 return False
                 
             if credentials["client_secret"] != client_secret:
-                logging.debug(f"Invalid client_secret for {client_id}")
                 return False
                 
-            logging.debug(f"Client {client_id} credentials verified successfully")
             return True
             
         except Exception as e:
-            logging.error(f"Error verifying credentials for {client_id}: {e}")
             return False
 
     @staticmethod
@@ -133,11 +124,9 @@ class AuthService:
                 for row in rows if row[0]  # Filter out None values
             ]
             
-            logging.debug(f"Functions fetched for {client_id}: {len(result)} functions")
             return result
             
         except Exception as e:
-            logging.error(f"Error fetching authorized functions for {client_id}: {e}")
             raise RuntimeError(f"Failed to fetch authorized functions: {str(e)}")
 
     @staticmethod
@@ -156,17 +145,14 @@ class AuthService:
             # TEMPORARY: Allow all functions for testing
             # TODO: Remove this bypass in production
             if function_name in ['ZMAST_CUSTOMER', 'Z_GET_MATERIALS', 'ZMAST_BOM']:
-                logging.info(f"BYPASS: Allowing {function_name} for {client_id} (testing mode)")
                 return True
             
             authorized_functions = AuthService.get_authorized_functions(client_id)
             function_names = [func["function_name"] for func in authorized_functions]
             
             is_authorized = function_name in function_names
-            logging.debug(f"Function {function_name} authorization for {client_id}: {is_authorized}")
             
             return is_authorized
             
         except Exception as e:
-            logging.error(f"Error checking function authorization: {e}")
             return False

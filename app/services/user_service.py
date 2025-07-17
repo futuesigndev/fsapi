@@ -2,7 +2,6 @@
 User Service - Employee Authentication and Profile Management
 Handles employee authentication and user profile operations
 """
-import logging
 from typing import Dict, Optional
 from app.services.database_service import DatabaseService
 
@@ -19,53 +18,39 @@ class UserService:
         
         Args:
             employee_id (str): Employee ID
-            password (str): Employee password
-            
+            password (str): Last 4 digits of employee card
+        
         Returns:
             Dict with employee info or None if authentication failed
         """
         try:
-            # Note: This is a placeholder implementation
-            # In real implementation, you would:
-            # 1. Hash the password properly
-            # 2. Use secure password comparison
-            # 3. Implement proper user table structure
-            
             query = """
-                SELECT EMPLOYEE_ID, EMPLOYEE_NAME, DEPARTMENT, EMAIL, ROLE
-                FROM EMPLOYEE_MASTER
+                SELECT ME.EMPLOYEE_ID, 
+                    ME.EMPLOYEE_CARD,
+                    CONCAT(ME.FIRST_NAME_TH, CONCAT(' ', ME.LAST_NAME_TH)) AS EMPLOYEE_NAME
+                FROM MASTER_EMPLOYEES ME
                 WHERE EMPLOYEE_ID = :employee_id 
-                AND PASSWORD = :password
-                AND ACTIVE = 'Y'
+                AND ACTIVE = '1'
             """
-            
             row = DatabaseService.execute_query(
                 query=query,
-                params={
-                    "employee_id": employee_id,
-                    "password": password  # TODO: Implement proper password hashing
-                },
+                params={"employee_id": employee_id},
                 fetch_one=True,
                 fetch_all=False
             )
-            
             if row:
-                employee_info = {
-                    "employee_id": row[0],
-                    "employee_name": row[1],
-                    "department": row[2],
-                    "email": row[3],
-                    "role": row[4]
-                }
-                
-                logging.debug(f"Employee {employee_id} authenticated successfully")
-                return employee_info
-            
-            logging.debug(f"Authentication failed for employee {employee_id}")
+                employee_card = row[1]
+                if employee_card and employee_card[-4:] == password:
+                    employee_info = {
+                        "employee_id": row[0],
+                        "employee_card": row[1],
+                        "employee_name": row[2]
+                    }
+                    return employee_info
+                else:
+                    return None
             return None
-            
-        except Exception as e:
-            logging.error(f"Error authenticating employee {employee_id}: {e}")
+        except Exception:
             return None
 
     @staticmethod
@@ -75,95 +60,56 @@ class UserService:
         
         Args:
             employee_id (str): Employee ID
-            
+        
         Returns:
             Dict with employee profile or None if not found
         """
+        def safe_lob_to_str(val):
+            try:
+                return str(val.read()) if hasattr(val, 'read') else str(val)
+            except Exception:
+                return None
         try:
             query = """
-                SELECT 
-                    EMPLOYEE_ID, 
-                    EMPLOYEE_NAME, 
-                    DEPARTMENT, 
-                    EMAIL, 
-                    ROLE,
-                    PHONE,
-                    POSITION,
-                    MANAGER_ID,
-                    CREATED_DATE,
-                    LAST_LOGIN
-                FROM EMPLOYEE_MASTER
-                WHERE EMPLOYEE_ID = :employee_id 
-                AND ACTIVE = 'Y'
+                SELECT ME.EMPLOYEE_ID, 
+                    ME.EMPLOYEE_CARD,
+                    CONCAT(ME.FIRST_NAME_TH, CONCAT(' ', ME.LAST_NAME_TH)) AS EMPLOYEE_NAME,
+                    DI.DIVISION_DESC_TH,
+                    MD.DEPARTMENT_NAME_TH,
+                    MS.SECTION_NAME,
+                    MN.NATIONALITY,
+                    ME.DEPARTMENT_ID
+                FROM MASTER_EMPLOYEES ME
+                LEFT JOIN MASTER_DEPARTMENT MD ON MD.DEPARTMENT_ID = ME.DEPARTMENT_ID
+                LEFT JOIN MASTER_DIVISION DI ON DI.DIVISION_ID = ME.DIVISION_ID
+                LEFT JOIN MASTER_SECTION MS ON MS.SECTION_ID = ME.SECTION_ID
+                LEFT JOIN MASTER_NATIONALITY MN ON MN.NATIONALITY_ID = ME.NATIONALITY_ID 
+                WHERE ME.EMPLOYEE_ID = :employee_id 
+                AND ME.ACTIVE = '1'
             """
-            
             row = DatabaseService.execute_query(
                 query=query,
                 params={"employee_id": employee_id},
                 fetch_one=True,
                 fetch_all=False
             )
-            
             if row:
                 profile = {
-                    "employee_id": row[0],
-                    "employee_name": row[1],
-                    "department": row[2],
-                    "email": row[3],
-                    "role": row[4],
-                    "phone": row[5] if row[5] else "",
-                    "position": row[6] if row[6] else "",
-                    "manager_id": row[7] if row[7] else "",
-                    "created_date": row[8].strftime("%Y-%m-%d") if row[8] else "",
-                    "last_login": row[9].strftime("%Y-%m-%d %H:%M:%S") if row[9] else ""
+                    "employee_id": safe_lob_to_str(row[0]),
+                    "employee_card": safe_lob_to_str(row[1]),
+                    "employee_name": safe_lob_to_str(row[2]),
+                    "division_desc_th": safe_lob_to_str(row[3]),
+                    "department_name_th": safe_lob_to_str(row[4]),
+                    "section_name": safe_lob_to_str(row[5]),
+                    "nationality": safe_lob_to_str(row[6]),
+                    "department": safe_lob_to_str(row[7])
                 }
-                
-                logging.debug(f"Profile retrieved for employee {employee_id}")
                 return profile
-            
-            logging.debug(f"Employee profile not found for {employee_id}")
             return None
-            
-        except Exception as e:
-            logging.error(f"Error retrieving profile for employee {employee_id}: {e}")
+        except Exception:
             return None
 
-    @staticmethod
-    def update_last_login(employee_id: str) -> bool:
-        """
-        Update employee's last login timestamp
-        
-        Args:
-            employee_id (str): Employee ID
-            
-        Returns:
-            bool: True if update successful, False otherwise
-        """
-        try:
-            query = """
-                UPDATE EMPLOYEE_MASTER 
-                SET LAST_LOGIN = SYSDATE
-                WHERE EMPLOYEE_ID = :employee_id
-            """
-            
-            rows_affected = DatabaseService.execute_query(
-                query=query,
-                params={"employee_id": employee_id},
-                fetch_one=False,
-                fetch_all=False
-            )
-            
-            if rows_affected > 0:
-                logging.debug(f"Last login updated for employee {employee_id}")
-                return True
-            else:
-                logging.debug(f"No rows updated for employee {employee_id}")
-                return False
-                
-        except Exception as e:
-            logging.error(f"Error updating last login for employee {employee_id}: {e}")
-            return False
-
+    
     @staticmethod
     def validate_employee_exists(employee_id: str) -> bool:
         """
@@ -176,11 +122,12 @@ class UserService:
             bool: True if employee exists and is active, False otherwise
         """
         try:
+            
             query = """
                 SELECT COUNT(1)
-                FROM EMPLOYEE_MASTER
+                FROM MASTER_EMPLOYEES
                 WHERE EMPLOYEE_ID = :employee_id 
-                AND ACTIVE = 'Y'
+                AND ACTIVE = '1'
             """
             
             row = DatabaseService.execute_query(
@@ -191,10 +138,8 @@ class UserService:
             )
             
             exists = row[0] > 0 if row else False
-            logging.debug(f"Employee {employee_id} exists: {exists}")
             
             return exists
             
         except Exception as e:
-            logging.error(f"Error checking if employee {employee_id} exists: {e}")
             return False

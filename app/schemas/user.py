@@ -1,9 +1,8 @@
 """
 User Schemas - Employee and User related schemas
 """
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 from typing import Optional
-from datetime import datetime
 
 
 class UserBase(BaseModel):
@@ -13,19 +12,14 @@ class UserBase(BaseModel):
     employee_id: str
     employee_name: str
     department: str
-    email: Optional[str] = None
-    role: str
 
 
 class UserProfile(UserBase):
-    """
-    Complete user profile schema
-    """
-    phone: Optional[str] = None
-    position: Optional[str] = None
-    manager_id: Optional[str] = None
-    created_date: Optional[str] = None
-    last_login: Optional[str] = None
+    employee_card: Optional[str] = None
+    division_desc_th: Optional[str] = None
+    department_name_th: Optional[str] = None
+    section_name: Optional[str] = None
+    nationality: Optional[str] = None
 
 
 class UserAuthentication(BaseModel):
@@ -34,9 +28,7 @@ class UserAuthentication(BaseModel):
     """
     employee_id: str
     employee_name: str
-    department: str
-    email: Optional[str] = None
-    role: str
+    employee_card: str
     access_token: str
     token_type: str = "bearer"
 

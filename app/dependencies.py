@@ -1,4 +1,3 @@
-import logging
 import os
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
@@ -30,7 +29,6 @@ def create_access_token(data: dict):
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
-    logging.debug(f"Creating token with data: {to_encode}")  # Log Payload ก่อน encode
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
@@ -51,11 +49,9 @@ def verify_token(token: str = Depends(oauth2_scheme)):
                 }
             )
 
-        logging.debug(f"Token is valid for client_id: {client_id}")
         return {"client_id": client_id}  # ส่ง client_id กลับไป
     except JWTError as e:
         error_detail = str(e).lower()
-        logging.error(f"JWT Error: {e}")
         
         # Determine specific error type
         if "expired" in error_detail:
@@ -86,7 +82,6 @@ def verify_credentials(client_id: str, client_secret: str):
     if not credentials or credentials["client_secret"] != client_secret:
         return False
 
-    logging.debug(f"Client {client_id} credentials verified.")
     return True
 
 

@@ -3,7 +3,6 @@
 Customer Management API V1 - Customer data endpoints
 Handles customer search and detail retrieval
 """
-import logging
 from fastapi import APIRouter, HTTPException, Query, Depends
 from fastapi.responses import JSONResponse
 from typing import Optional
@@ -65,7 +64,6 @@ async def search_customers_get(
         }
         
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer search request from {user_id}: {search_params}")
         
         # Validate at least one search criteria
         if not any([customer_number, customer_name, city]):
@@ -90,8 +88,6 @@ async def search_customers_get(
                 status_code=500
             )
         
-        logging.debug(f"Customer search completed: {result['total_records']} records found")
-        
         return CustomerSearchResponse(
             status=result["status"],
             message=result["message"],
@@ -100,7 +96,6 @@ async def search_customers_get(
         )
         
     except Exception as e:
-        logging.error(f"Customer search error: {e}")
         return error_response(
             code=ErrorCode.INTERNAL_SERVER_ERROR,
             message="Internal server error during customer search",
@@ -121,7 +116,6 @@ async def search_customers_post(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer search request from {user_id}: {search_request.dict()}")
         
         # Validate at least one search criteria
         if not any([
@@ -153,8 +147,6 @@ async def search_customers_post(
                 status_code=500
             )
         
-        logging.debug(f"Customer search completed: {result['total_records']} records found")
-        
         return CustomerSearchResponse(
             status=result["status"],
             message=result["message"],
@@ -163,7 +155,6 @@ async def search_customers_post(
         )
         
     except Exception as e:
-        logging.error(f"Customer search error: {e}")
         return error_response(
             code=ErrorCode.INTERNAL_SERVER_ERROR,
             message="Internal server error during customer search",
@@ -188,7 +179,6 @@ async def lookup_customer(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer lookup request from {user_id}")
         
         # Validate at least one search criteria
         if not any([name, phone, tax_id]):
@@ -213,8 +203,6 @@ async def lookup_customer(
                 status_code=500
             )
         
-        logging.debug(f"Customer lookup completed: {result['total_records']} records found")
-        
         return CustomerSearchResponse(
             status=result["status"],
             message=result["message"],
@@ -223,7 +211,6 @@ async def lookup_customer(
         )
         
     except Exception as e:
-        logging.error(f"Customer lookup error: {e}")
         return error_response(
             code=ErrorCode.INTERNAL_SERVER_ERROR,
             message="Internal server error during customer lookup",
@@ -242,7 +229,6 @@ async def get_customer_details(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer detail request from {user_id} for customer: {customer_number}")
         
         # Validate customer number format (basic validation)
         if not customer_number or len(customer_number) == 0:
@@ -262,8 +248,6 @@ async def get_customer_details(
             else:
                 raise HTTPException(status_code=500, detail=result["message"])
         
-        logging.debug(f"Customer details retrieved for: {customer_number}")
-        
         return CustomerDetailResponse(
             status=result["status"],
             message=result["message"],
@@ -273,7 +257,6 @@ async def get_customer_details(
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Customer detail error for {customer_number}: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error retrieving customer details"
@@ -290,7 +273,6 @@ async def validate_customer(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.debug(f"Customer validation request from {user_id} for: {customer_number}")
         
         # Validate customer number format
         if not customer_number or len(customer_number) == 0:
@@ -304,8 +286,6 @@ async def validate_customer(
         # Check if customer exists
         exists = CustomerService.validate_customer_exists(customer_number)
         
-        logging.debug(f"Customer validation result for {customer_number}: {exists}")
-        
         return CustomerValidationResponse(
             exists=exists,
             customer_number=customer_number
@@ -314,7 +294,6 @@ async def validate_customer(
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Customer validation error for {customer_number}: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error during customer validation"
@@ -331,7 +310,6 @@ async def get_customer_sales_views(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer sales views request from {user_id} for: {customer_number}")
         
         customer_number = customer_number.strip().upper()
         
@@ -341,14 +319,11 @@ async def get_customer_sales_views(
         if result["status"] == "error":
             raise HTTPException(status_code=500, detail=result["message"])
         
-        logging.debug(f"Sales views retrieved for: {customer_number}")
-        
         return result
         
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Sales views error for {customer_number}: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error retrieving sales views"
@@ -367,7 +342,6 @@ async def get_customer_partner_functions(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer partner functions request from {user_id} for: {customer_number}")
         
         customer_number = customer_number.strip().upper()
         
@@ -381,14 +355,11 @@ async def get_customer_partner_functions(
         if result["status"] == "error":
             raise HTTPException(status_code=500, detail=result["message"])
         
-        logging.debug(f"Partner functions retrieved for: {customer_number}")
-        
         return result
         
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Partner functions error for {customer_number}: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error retrieving partner functions"
@@ -405,7 +376,6 @@ async def get_customer_complete_info(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Complete customer info request from {user_id} for: {customer_number}")
         
         customer_number = customer_number.strip().upper()
         
@@ -418,14 +388,11 @@ async def get_customer_complete_info(
             else:
                 raise HTTPException(status_code=500, detail=result["message"])
         
-        logging.debug(f"Complete customer info retrieved for: {customer_number}")
-        
         return result
         
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Complete customer info error for {customer_number}: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error retrieving complete customer information"
@@ -442,15 +409,12 @@ async def get_customer_specification(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer specification request from {user_id}")
         
         # Get customer specification
         result = CustomerService.get_customer_specification()
         
         if result["status"] == "error":
             raise HTTPException(status_code=500, detail=result["message"])
-        
-        logging.debug("Customer specification retrieved successfully")
         
         return CustomerSpecResponse(
             status=result["status"],
@@ -461,7 +425,6 @@ async def get_customer_specification(
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Customer specification error: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error retrieving customer specification"
@@ -481,15 +444,12 @@ async def create_customer(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        logging.info(f"Customer creation request from {user_id}")
         
         # Convert Pydantic models to dict
         general_data = create_request.general_data.dict()
         sale_data = create_request.sale_data.dict()
         
         # Log the creation request (excluding sensitive data)
-        logging.info(f"Creating customer with general_data keys: {list(general_data.keys())}")
-        logging.info(f"Creating customer with sale_data keys: {list(sale_data.keys())}")
         
         # Create customer
         result = CustomerService.create_customer(
@@ -499,8 +459,6 @@ async def create_customer(
         
         if result["status"] == "error":
             raise HTTPException(status_code=400, detail=result["message"])
-        
-        logging.info(f"Customer created successfully: {result.get('customer_number')}")
         
         return CustomerCreateResponse(
             status=result["status"],
@@ -512,7 +470,6 @@ async def create_customer(
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Customer creation error: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error during customer creation"

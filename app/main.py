@@ -1,4 +1,3 @@
-import logging
 import time
 from fastapi import FastAPI, HTTPException, Form, Request
 from fastapi.exceptions import RequestValidationError
@@ -28,7 +27,6 @@ app = FastAPI(
 # Add custom exception handlers for better debugging
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    logging.error(f"Validation error on {request.method} {request.url}: {exc.errors()}")
     return JSONResponse(
         status_code=422,
         content={
@@ -40,7 +38,6 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 @app.exception_handler(ValidationError)
 async def pydantic_exception_handler(request: Request, exc: ValidationError):
-    logging.error(f"Pydantic validation error on {request.method} {request.url}: {exc.errors()}")
     return JSONResponse(
         status_code=422,
         content={
@@ -102,7 +99,6 @@ async def monitoring_stats():
             "monitoring_data": stats
         }
     except Exception as e:
-        logging.error(f"Monitoring stats error: {e}")
         raise HTTPException(
             status_code=500,
             detail="Failed to retrieve monitoring statistics"

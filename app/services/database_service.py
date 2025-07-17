@@ -4,7 +4,6 @@ Provides centralized Oracle database connection with context manager for auto-cl
 Enhanced with connection pooling for better performance
 """
 import cx_Oracle
-import logging
 from contextlib import contextmanager
 from threading import Lock
 from typing import Optional
@@ -57,10 +56,7 @@ class DatabaseConnectionPool:
                 max_lifetime_session=3600  # 1 hour max session lifetime
             )
             
-            logging.info(f"Oracle connection pool initialized: min={min_connections}, max={max_connections}")
-            
         except Exception as e:
-            logging.error(f"Failed to initialize Oracle connection pool: {e}")
             raise RuntimeError(f"Connection pool initialization failed: {str(e)}")
     
     def get_connection(self):
@@ -72,10 +68,8 @@ class DatabaseConnectionPool:
         
         try:
             connection = self._pool.acquire()
-            logging.debug("Connection acquired from pool")
             return connection
         except Exception as e:
-            logging.error(f"Failed to acquire connection from pool: {e}")
             raise RuntimeError(f"Failed to get database connection: {str(e)}")
     
     def return_connection(self, connection):
@@ -85,9 +79,8 @@ class DatabaseConnectionPool:
         if connection and self._pool:
             try:
                 self._pool.release(connection)
-                logging.debug("Connection returned to pool")
             except Exception as e:
-                logging.error(f"Failed to return connection to pool: {e}")
+                pass
     
     def close_pool(self):
         """
@@ -97,9 +90,8 @@ class DatabaseConnectionPool:
             try:
                 self._pool.close()
                 self._pool = None
-                logging.info("Oracle connection pool closed")
             except Exception as e:
-                logging.error(f"Error closing connection pool: {e}")
+                pass
     
     def get_pool_status(self):
         """
@@ -132,7 +124,6 @@ class DatabaseService:
         """
         if cls._pool_manager is None:
             cls._pool_manager = DatabaseConnectionPool()
-            logging.info("Database service initialized with connection pooling")
     
     @classmethod
     def get_connection(cls):
@@ -145,10 +136,8 @@ class DatabaseService:
         
         try:
             connection = cls._pool_manager.get_connection()
-            logging.debug("Database connection established from pool")
             return connection
         except Exception as e:
-            logging.error(f"Failed to get database connection: {e}")
             raise RuntimeError(f"Database connection failed: {str(e)}")
 
     @classmethod
@@ -171,7 +160,6 @@ class DatabaseService:
                     connection.rollback()
                 except:
                     pass
-            logging.error(f"Database operation failed: {e}")
             raise
         finally:
             if connection and cls._pool_manager:
@@ -208,7 +196,6 @@ class DatabaseService:
                     return cursor.rowcount
                     
             except Exception as e:
-                logging.error(f"Query execution failed: {e}")
                 raise
             finally:
                 cursor.close()
@@ -228,14 +215,12 @@ class DatabaseService:
                 
                 pool_status = cls._pool_manager.get_pool_status() if cls._pool_manager else None
                 
-                logging.info("Database connection test successful")
                 return {
                     "connection_test": True,
                     "pool_status": pool_status,
                     "message": "Database connection and pool working correctly"
                 }
         except Exception as e:
-            logging.error(f"Database connection test failed: {e}")
             return {
                 "connection_test": False,
                 "pool_status": None,
@@ -250,7 +235,6 @@ class DatabaseService:
         if cls._pool_manager:
             cls._pool_manager.close_pool()
             cls._pool_manager = None
-            logging.info("Database service shutdown completed")
 
 
 # Initialize database service on module import

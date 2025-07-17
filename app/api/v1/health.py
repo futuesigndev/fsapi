@@ -2,7 +2,6 @@
 Health Check API - System health monitoring endpoints
 Provides comprehensive health checks for all system components
 """
-import logging
 import time
 from fastapi import APIRouter, HTTPException
 from typing import Dict, Any
@@ -33,7 +32,6 @@ def check_database_health() -> Dict[str, Any]:
             "error": result.get("error")
         }
     except Exception as e:
-        logging.error(f"Database health check failed: {e}")
         return {
             "status": "unhealthy",
             "response_time_ms": 0,
@@ -78,7 +76,6 @@ def check_sap_health() -> Dict[str, Any]:
             }
             
     except Exception as e:
-        logging.error(f"SAP health check failed: {e}")
         return {
             "status": "unhealthy",
             "response_time_ms": 0,
@@ -144,7 +141,6 @@ def check_file_system_health() -> Dict[str, Any]:
         }
         
     except Exception as e:
-        logging.error(f"File system health check failed: {e}")
         return {
             "status": "unhealthy",
             "error": str(e),
@@ -175,7 +171,6 @@ def check_rate_limiting_health() -> Dict[str, Any]:
         }
         
     except Exception as e:
-        logging.error(f"Rate limiting health check failed: {e}")
         return {
             "status": "unhealthy",
             "rate_limiting_functional": False,
@@ -232,13 +227,9 @@ async def health_check():
             }
         }
         
-        # Log health check result
-        logging.info(f"Health check completed: {overall_status} ({healthy_count}/{total_count} components healthy)")
-        
         return health_data
         
     except Exception as e:
-        logging.error(f"Health check failed: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"Health check system error: {str(e)}"
@@ -261,7 +252,6 @@ async def database_health():
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Database health endpoint failed: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"Database health check failed: {str(e)}"
@@ -284,7 +274,6 @@ async def sap_health():
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"SAP health endpoint failed: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"SAP health check failed: {str(e)}"
@@ -307,7 +296,6 @@ async def filesystem_health():
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Filesystem health endpoint failed: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"Filesystem health check failed: {str(e)}"
@@ -330,7 +318,6 @@ async def rate_limiting_health():
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Rate limiting health endpoint failed: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"Rate limiting health check failed: {str(e)}"

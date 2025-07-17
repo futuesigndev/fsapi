@@ -1,4 +1,3 @@
-import logging
 import os
 import json
 from fastapi import APIRouter, HTTPException
@@ -106,7 +105,6 @@ async def call_function_api(request: CallFunctionRequest):
         }
 
     except Exception as e:
-        logging.error(f"Error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 def prepare_sap_data(parameters: Dict[str, Any], metadata: Dict[str, Any]) -> Dict[str, Any]:

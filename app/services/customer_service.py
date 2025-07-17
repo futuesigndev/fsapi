@@ -2,7 +2,6 @@
 Customer Service - Customer Data Operations
 Handles customer search and data retrieval from Oracle database
 """
-import logging
 from typing import Dict, List, Optional
 from app.services.database_service import DatabaseService
 import re
@@ -107,8 +106,6 @@ class CustomerService:
             total_records = len(customers)
             message = f"Found {total_records} customer(s)"
             
-            logging.debug(f"Customer search completed: {total_records} records found")
-            
             return {
                 "status": "success",
                 "message": message,
@@ -117,7 +114,6 @@ class CustomerService:
             }
             
         except Exception as e:
-            logging.error(f"Error searching customers: {e}")
             return {
                 "status": "error",
                 "message": f"Customer search failed: {str(e)}",
@@ -214,8 +210,6 @@ class CustomerService:
                 "ZTERM": row[24].strip() if row[24] else ""
             }
             
-            logging.debug(f"Customer details retrieved for {customer_number}")
-            
             return {
                 "status": "success",
                 "message": f"Customer {customer_number} details retrieved",
@@ -223,7 +217,6 @@ class CustomerService:
             }
             
         except Exception as e:
-            logging.error(f"Error retrieving customer details for {customer_number}: {e}")
             return {
                 "status": "error",
                 "message": f"Failed to retrieve customer details: {str(e)}",
@@ -256,12 +249,10 @@ class CustomerService:
             )
             
             exists = row[0] > 0 if row else False
-            logging.debug(f"Customer {customer_number} exists: {exists}")
             
             return exists
             
         except Exception as e:
-            logging.error(f"Error checking if customer {customer_number} exists: {e}")
             return False
 
     @staticmethod
@@ -355,7 +346,6 @@ class CustomerService:
             }
             
         except Exception as e:
-            logging.error(f"Error retrieving sales views for {customer_number}: {e}")
             return {
                 "status": "error",
                 "message": f"Failed to retrieve sales views: {str(e)}",
@@ -439,7 +429,6 @@ class CustomerService:
             }
             
         except Exception as e:
-            logging.error(f"Error retrieving partner functions for {customer_number}: {e}")
             return {
                 "status": "error",
                 "message": f"Failed to retrieve partner functions: {str(e)}",
@@ -478,12 +467,9 @@ class CustomerService:
                 "partner_functions": partner_functions_result.get("partner_functions", [])
             }
             
-            logging.debug(f"Complete customer info retrieved for {customer_number}")
-            
             return complete_info
             
         except Exception as e:
-            logging.error(f"Error retrieving complete customer info for {customer_number}: {e}")
             return {
                 "status": "error",
                 "message": f"Failed to retrieve complete customer information: {str(e)}",
@@ -738,7 +724,6 @@ class CustomerService:
             }
             
         except Exception as e:
-            logging.error(f"Error getting customer specification: {e}")
             return {
                 "status": "error",
                 "message": f"Failed to get customer specification: {str(e)}",
@@ -825,8 +810,6 @@ class CustomerService:
             }
             
             # Log the customer creation request
-            logging.info(f"Creating customer with data: {customer_data}")
-            
             # Here you would call SAP RFC function to create customer
             # sap_response = SAPService.call_function("CUSTOMER_CREATE", customer_data)
             
@@ -837,8 +820,6 @@ class CustomerService:
                 "message": "Customer created successfully"
             }
             
-            logging.info(f"Customer created successfully: {customer_number}")
-            
             return {
                 "status": "success",
                 "message": f"Customer {customer_number} created successfully",
@@ -847,7 +828,6 @@ class CustomerService:
             }
             
         except Exception as e:
-            logging.error(f"Error creating customer: {e}")
             return {
                 "status": "error",
                 "message": f"Failed to create customer: {str(e)}",
@@ -968,8 +948,6 @@ class CustomerService:
             
             message = f"Found {total_records} customer(s) matching {', '.join(search_criteria)}"
             
-            logging.debug(f"Customer lookup completed: {total_records} records found")
-            
             return {
                 "status": "success",
                 "message": message,
@@ -978,7 +956,6 @@ class CustomerService:
             }
             
         except Exception as e:
-            logging.error(f"Error in customer lookup: {e}")
             return {
                 "status": "error",
                 "message": f"Customer lookup failed: {str(e)}",

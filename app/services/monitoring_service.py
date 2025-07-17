@@ -2,7 +2,6 @@
 Enhanced Logging and Monitoring Service
 Provides structured logging, request tracking, and performance monitoring
 """
-import logging
 import time
 import json
 import uuid
@@ -12,8 +11,14 @@ from fastapi import Request, Response
 from functools import wraps
 from threading import Lock
 from collections import defaultdict, deque
+import logging
 import os
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+from app.config import Config
+from app.schemas.sap import SAPFunctionRequest, SAPFunctionResponse
 
 class PerformanceMonitor:
     """

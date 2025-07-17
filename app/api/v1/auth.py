@@ -2,7 +2,6 @@
 Authentication API V1 - User authentication endpoints
 Handles employee login and user profile management
 """
-import logging
 from fastapi import APIRouter, HTTPException, Depends
 from datetime import datetime, timedelta
 import os
@@ -45,34 +44,26 @@ async def user_login(
                 detail="Invalid employee credentials"
             )
         
-        # Update last login timestamp
-        UserService.update_last_login(login_request.employee_id)
-        
         # Create JWT token with user type
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         access_token = create_user_access_token(
             data={
-                "sub": employee_data["employee_id"],
+                "sub": str(employee_data["employee_id"]),
                 "type": "user",
                 "name": employee_data["employee_name"],
-                "dept": employee_data["department"],
-                "role": employee_data["role"]
+                "card": employee_data["employee_card"]
             },
             expires_delta=access_token_expires
         )
         
         # Prepare response
         user_auth_data = {
-            "employee_id": employee_data["employee_id"],
+            "employee_id": str(employee_data["employee_id"]),
             "employee_name": employee_data["employee_name"],
-            "department": employee_data["department"],
-            "email": employee_data["email"],
-            "role": employee_data["role"],
+            "employee_card": employee_data["employee_card"],
             "access_token": access_token,
             "token_type": "bearer"
         }
-        
-        logging.info(f"User login successful: {login_request.employee_id}")
         
         return UserLoginResponse(
             status="success",
@@ -82,8 +73,7 @@ async def user_login(
         
     except HTTPException:
         raise
-    except Exception as e:
-        logging.error(f"Login error for {login_request.employee_id}: {e}")
+    except Exception:
         raise HTTPException(
             status_code=500,
             detail="Internal server error during login"
@@ -98,20 +88,17 @@ async def get_current_user(current_user: TokenData = Depends(verify_user_token))
     try:
         # Get user profile from database
         profile = UserService.get_employee_profile(current_user.employee_id)
-        
+                
         if not profile:
             raise HTTPException(
                 status_code=404,
                 detail="User profile not found"
             )
-        
-        logging.debug(f"Profile retrieved for user: {current_user.employee_id}")
         return UserProfile(**profile)
         
     except HTTPException:
         raise
-    except Exception as e:
-        logging.error(f"Error retrieving profile for {current_user.employee_id}: {e}")
+    except Exception:
         raise HTTPException(
             status_code=500,
             detail="Internal server error retrieving profile"
@@ -140,14 +127,11 @@ async def refresh_token(current_user: TokenData = Depends(verify_user_token)):
                 "sub": profile["employee_id"],
                 "type": "user",
                 "name": profile["employee_name"],
-                "dept": profile["department"],
-                "role": profile["role"]
+                "card": profile["employee_card"]
             },
             expires_delta=access_token_expires
         )
-        
-        logging.debug(f"Token refreshed for user: {current_user.employee_id}")
-        
+
         return Token(
             access_token=access_token,
             token_type="bearer"
@@ -155,8 +139,7 @@ async def refresh_token(current_user: TokenData = Depends(verify_user_token)):
         
     except HTTPException:
         raise
-    except Exception as e:
-        logging.error(f"Error refreshing token for {current_user.employee_id}: {e}")
+    except Exception:
         raise HTTPException(
             status_code=500,
             detail="Internal server error refreshing token"

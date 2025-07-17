@@ -2,7 +2,6 @@
 SAP Integration API V1 - Enhanced SAP function calling with improved security
 Handles SAP BAPI function calls with authorization and metadata validation
 """
-import logging
 import os
 import json
 from fastapi import APIRouter, HTTPException, Depends
@@ -48,7 +47,6 @@ def load_function_metadata(function_name: str) -> Dict[str, Any]:
             return data
         
     except Exception as e:
-        logging.error(f"Error loading metadata for {function_name}: {e}")
         raise HTTPException(
             status_code=500, 
             detail=f"Failed to load metadata for function '{function_name}'"
@@ -255,7 +253,6 @@ async def call_sap_function(
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"SAP function call error for {sap_request.function_name}: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"Internal server error during SAP function call: {str(e)}"
@@ -280,7 +277,6 @@ async def call_sap_function_test(sap_request: SAPFunctionRequest):
         }
         
     except Exception as e:
-        logging.error(f"V1 SAP test endpoint error: {e}")
         return {
             "status": "error",
             "message": str(e)
@@ -302,7 +298,6 @@ async def test_sap_function(request: SAPFunctionRequest):
             "received_data": request.dict()
         }
     except Exception as e:
-        logging.error(f"Test endpoint error: {e}")
         return {
             "status": "error", 
             "message": str(e)
@@ -330,7 +325,6 @@ async def get_authorized_functions(
         )
         
     except Exception as e:
-        logging.error(f"Error retrieving authorized functions for {current_user.client_id}: {e}")
         raise HTTPException(
             status_code=500,
             detail="Internal server error retrieving authorized functions"
@@ -369,7 +363,6 @@ async def get_function_metadata(
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"Error retrieving metadata for {function_name}: {e}")
         raise HTTPException(
             status_code=500,
             detail=f"Internal server error retrieving function metadata"

@@ -93,3 +93,4 @@ coverage.xml
 dmypy.json
 
 *.whl
+*.ps1

@@ -3,7 +3,6 @@
 from pyrfc import Connection
 from app.config import Config
 from typing import List, Dict, Any
-import logging
 from .sap_service import connect_to_sap, parse_wa_data
 
 try:
@@ -471,7 +470,6 @@ def auto_detect_billing_type(delivery_doc: str):
         return "ZSB1"  # Default fallback เป็น ZSB1
         
     except Exception as e:
-        logging.warning(f"[AUTO_BILLING_TYPE] Could not detect type: {str(e)[:200]}")
         return "ZSB1"  # Default fallback เป็น ZSB1
         
     finally:

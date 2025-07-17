@@ -5,7 +5,6 @@ from pyrfc import Connection
 from app.config import Config
 import os
 from typing import List, Dict, Any
-import logging
 
 try:
     from pyrfc import Connection, ABAPApplicationError, CommunicationError

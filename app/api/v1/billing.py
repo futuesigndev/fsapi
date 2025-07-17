@@ -4,7 +4,6 @@ from fastapi import APIRouter, HTTPException, Depends
 from app.schemas.billing import CreateBillingRequest
 from app.services.billing_service import create_billing_document_in_sap, check_delivery_status, get_valid_billing_types, auto_detect_billing_type
 from app.dependencies_v1 import verify_any_token
-import logging
 
 try:
     from pyrfc import ABAPApplicationError, CommunicationError
@@ -25,8 +24,6 @@ async def create_billing_document_endpoint(
     รับแค่เลข Delivery Number เท่านั้น
     **Requires Authentication.**
     """
-    
-    logging.info(f"[BILLING] Create request: {request.delivery_number}, test_run: {request.test_run}")
     
     try:
         result = create_billing_document_in_sap(
@@ -63,7 +60,6 @@ async def create_billing_document_endpoint(
     except HTTPException:
         raise
     except ABAPApplicationError as abap_error:
-        logging.error(f"[BILLING] ABAP Error: {abap_error}")
         raise HTTPException(
             status_code=500,
             detail={
@@ -73,7 +69,6 @@ async def create_billing_document_endpoint(
             }
         )
     except CommunicationError as comm_error:
-        logging.error(f"[BILLING] SAP Communication Error: {comm_error}")
         raise HTTPException(
             status_code=503,
             detail={
@@ -83,7 +78,6 @@ async def create_billing_document_endpoint(
             }
         )
     except Exception as e:
-        logging.error(f"[BILLING] Unexpected error: {e}", exc_info=True)
         raise HTTPException(
             status_code=500,
             detail={
@@ -102,8 +96,6 @@ async def check_delivery_status_endpoint(
     """
     ตรวจสอบสถานะ Delivery Document ว่าสามารถสร้าง billing ได้หรือไม่
     """
-    
-    logging.info(f"[BILLING] Checking delivery status: {delivery_doc}")
     
     try:
         result = check_delivery_status(delivery_doc)
@@ -126,7 +118,6 @@ async def check_delivery_status_endpoint(
     except HTTPException:
         raise
     except Exception as e:
-        logging.error(f"[BILLING] Error checking delivery status: {e}")
         raise HTTPException(status_code=500, detail=f"Error checking delivery status: {str(e)}")
 
 
@@ -138,8 +129,6 @@ async def get_billing_types_endpoint(
     ดึงรายการ billing types ที่ valid จาก SAP system
     """
     
-    logging.info(f"[BILLING] Getting valid billing types")
-    
     try:
         result = get_valid_billing_types()
         
@@ -150,7 +139,6 @@ async def get_billing_types_endpoint(
         }
         
     except Exception as e:
-        logging.error(f"[BILLING] Error getting billing types: {e}")
         raise HTTPException(status_code=500, detail=f"Error getting billing types: {str(e)}")
 
 
@@ -162,8 +150,6 @@ async def suggest_billing_type_endpoint(
     """
     แนะนำ billing type ที่เหมาะสมสำหรับ delivery document
     """
-    
-    logging.info(f"[BILLING] Suggesting type for delivery: {delivery_doc}")
     
     try:
         suggested_type = auto_detect_billing_type(delivery_doc)
@@ -180,5 +166,4 @@ async def suggest_billing_type_endpoint(
         }
         
     except Exception as e:
-        logging.error(f"[BILLING] Error suggesting billing type: {e}")
         raise HTTPException(status_code=500, detail=f"Error suggesting billing type: {str(e)}")

@@ -1,4 +1,3 @@
-import logging
 from app.services.database_service import DatabaseService
 
 def get_user_credentials(client_id: str):
@@ -28,7 +27,6 @@ def get_user_credentials(client_id: str):
             }
         return None
     except Exception as e:
-        logging.error(f"Failed to fetch user credentials: {str(e)}")
         raise RuntimeError(f"Failed to fetch user credentials: {str(e)}")
 
 def get_function_names(client_id: str):
@@ -70,9 +68,7 @@ def get_function_names(client_id: str):
         )
         
         result = [{"function_name": row[0], "function_detail": row[1]} for row in rows]
-        logging.debug(f"Functions fetched for {client_id}: {result}")
         return result
     except Exception as e:
-        logging.error(f"Error fetching functions for {client_id}: {e}")
         raise RuntimeError("Failed to fetch function names.")
 
