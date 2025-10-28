@@ -4,6 +4,8 @@ Handles client authentication and SAP function permissions
 """
 from typing import Optional, Dict, List
 
+from app.services.database_service import DatabaseService
+
 class AuthService:
     """
     Service for handling client authentication and authorization
@@ -26,6 +28,7 @@ class AuthService:
                 FROM FSAPI_USER
                 WHERE CLIENT_ID = :client_id
             """
+            #print("Executing query to fetch client credentials for:", client_id)
             
             row = DatabaseService.execute_query(
                 query=query,

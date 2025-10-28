@@ -14,6 +14,7 @@ router = APIRouter(
     tags=["Billing - v1"],
 )
 
+@router.post("/create")
 @router.post("/create/")
 async def create_billing_document_endpoint(
     request: CreateBillingRequest,

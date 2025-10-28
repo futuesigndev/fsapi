@@ -40,6 +40,8 @@ def validate_delivery_document(delivery_doc: str):
                 "message": f"Delivery document {delivery_doc} not found in the system.",
                 "can_proceed": False
             }
+            
+        #print("Delivery document found:", delivery_check)
         
         # ตรวจสอบว่าเคยออกบิลแล้วหรือไม่ - ตรวจจาก VBRP
         billing_check = conn.call('RFC_READ_TABLE',
@@ -66,6 +68,8 @@ def validate_delivery_document(delivery_doc: str):
         
         # ถ้าผ่านการตรวจสอบทั้งหมด
         parsed_delivery = parse_wa_data(delivery_check["DATA"], delivery_check["FIELDS"])
+        print("ตรวจสอบว่าเคยออกบิลแล้วหรือไม่:", billing_check)
+                
         delivery_info = parsed_delivery[0] if parsed_delivery else {}
         
         return {
@@ -202,7 +206,7 @@ def create_billing_document_in_sap(delivery_number: str, test_run: bool = False)
         
         if not delivery_number:
             raise ValueError("Delivery number is required")
-        
+                
         # ตรวจสอบ delivery document ก่อนดำเนินการ
         validation_result = validate_delivery_document(delivery_number)
         

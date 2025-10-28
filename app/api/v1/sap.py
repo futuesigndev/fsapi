@@ -2,6 +2,7 @@
 SAP Integration API V1 - Enhanced SAP function calling with improved security
 Handles SAP BAPI function calls with authorization and metadata validation
 """
+import logging
 import os
 import json
 from fastapi import APIRouter, HTTPException, Depends
@@ -207,7 +208,7 @@ async def call_sap_function(
     Call SAP BAPI function with authentication and full functionality
     """
     try:
-        #logging.info(f"V1 SAP call: {sap_request.function_name} by client: {current_user.client_id}")
+        logging.info(f"V1 SAP call: {sap_request.function_name} by client: {current_user.client_id}")
         
         # Ensure parameters is not None
         if sap_request.parameters is None:
