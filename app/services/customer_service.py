@@ -840,6 +840,8 @@ class CustomerService:
         name: Optional[str] = None,
         phone: Optional[str] = None,
         tax_id: Optional[str] = None,
+        kunnr: Optional[str] = None,
+        parvw: str = 'SB',
         limit: int = 20
     ) -> Dict[str, any]:
         """
@@ -859,13 +861,13 @@ class CustomerService:
             # Build dynamic WHERE clause
             where_conditions = ["1=1"]  # Base condition
             params = {}
-            
+
             if name:
                 where_conditions.append(
                     "(UPPER(KNA1.NAME1) LIKE UPPER(:name) OR UPPER(KNA1.NAME2) LIKE UPPER(:name))"
                 )
                 params["name"] = f"%{name}%"
-            
+
             if phone:
                 # Normalize phone: remove all non-digits from input and DB
                 search_phone = re.sub(r'\D', '', phone)
@@ -873,11 +875,16 @@ class CustomerService:
                     "REGEXP_REPLACE(TRIM(KNA1.TELF1), '[^0-9]', '') LIKE :phone"
                 )
                 params["phone"] = f"{search_phone}%"  # match เฉพาะขึ้นต้นด้วยเลขที่ค้นหา
-            
+
             if tax_id:
                 where_conditions.append("KNA1.STCD3 LIKE :tax_id")
                 params["tax_id"] = f"%{tax_id}%"
-            
+
+            if kunnr:
+                # ตัด zero padding ด้านหน้า KUNNR ก่อนเปรียบเทียบ
+                where_conditions.append("LTRIM(KNA1.KUNNR, '0') LIKE :kunnr")
+                params["kunnr"] = f"%{kunnr}%"
+
             where_clause = " AND ".join(where_conditions)
 
             # Optimized query for quick lookup (JOIN KNVV)
@@ -897,17 +904,18 @@ class CustomerService:
                 NVL(KNVV.BZIRK, '') as BZIRK,    -- Sales District
                 NVL(KNVV.VKGRP, '') as VKGRP,    -- Sales Group
                 NVL(KNVV.VKBUR, '') as VKBUR,    -- Sales Office
-                KNVP.SPART,    -- <<== SPART from KNVP (Ship-to Party)
+                KNVP.SPART,    -- SPART from KNVP (Partner Function)
                 NVL(KNVV.ZTERM, '') as ZTERM     -- Payment Terms
             FROM KNA1
             LEFT JOIN KNVV ON KNA1.KUNNR = KNVV.KUNNR
-            LEFT JOIN KNVP ON KNA1.KUNNR = KNVP.KUNNR AND PARVW = 'WE' AND PARZA = 0
+            LEFT JOIN KNVP ON KNA1.KUNNR = KNVP.KUNNR AND KNVP.PARVW = :parvw AND KNVP.PARZA = 0
             WHERE {where_clause}
             AND ROWNUM <= :limit
             ORDER BY KNA1.NAME1, KNA1.KUNNR
             """
             
             params["limit"] = limit
+            params["parvw"] = parvw
             
             rows = DatabaseService.execute_query(
                 query=query,

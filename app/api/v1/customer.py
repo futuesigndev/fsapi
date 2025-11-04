@@ -169,6 +169,8 @@ async def lookup_customer(
     name: Optional[str] = Query(None, description="Customer name (NAME1/NAME2)"),
     phone: Optional[str] = Query(None, description="Phone number (TELF1)"),
     tax_id: Optional[str] = Query(None, description="Tax ID (STCD3)"),
+    kunnr: Optional[str] = Query(None, description="Customer Number (KUNNR)"),
+    parvw: str = Query('SB', description="Partner Function (default SB)"),
     limit: int = Query(20, ge=1, le=100, description="Maximum number of results"),
     current_user: TokenData = Depends(verify_any_token),
     _rate_limit = Depends(CustomerRateLimit)
@@ -179,37 +181,39 @@ async def lookup_customer(
     """
     try:
         user_id = current_user.employee_id or current_user.client_id
-        
+
         # Validate at least one search criteria
-        if not any([name, phone, tax_id]):
+        if not any([name, phone, tax_id, kunnr]):
             return error_response(
                 code=ErrorCode.INVALID_INPUT,
-                message="At least one search criteria is required: name, phone, or tax_id",
+                message="At least one search criteria is required: name, phone, tax_id, or kunnr",
                 status_code=400
             )
-        
+
         # Perform lookup with specialized query
         result = CustomerService.lookup_customers(
             name=name,
             phone=phone,
             tax_id=tax_id,
+            kunnr=kunnr,
+            parvw=parvw,
             limit=limit
         )
-        
+
         if result["status"] == "error":
             return error_response(
                 code=ErrorCode.DATABASE_ERROR,
                 message=result["message"],
                 status_code=500
             )
-        
+
         return CustomerSearchResponse(
             status=result["status"],
             message=result["message"],
             total_records=result["total_records"],
             customers=result["customers"]
         )
-        
+
     except Exception as e:
         return error_response(
             code=ErrorCode.INTERNAL_SERVER_ERROR,
